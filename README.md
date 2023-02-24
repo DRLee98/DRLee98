@@ -23,6 +23,6 @@
   
   [![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=drlee98&layout=compact&hide=css)](https://github.com/anuraghazra/github-readme-stats)
   
-  <a href="https://opgc.me/#/users/DRLee98" target="_blank"><img src="https://api.opgc.me/githubs/users/DRLee98/tag/?theme=basic" /></a>
+<!--   <a href="https://opgc.me/#/users/DRLee98" target="_blank"><img src="https://api.opgc.me/githubs/users/DRLee98/tag/?theme=basic" /></a> -->
   
 </div>
