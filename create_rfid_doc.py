@@ -104,5 +104,47 @@ add_body(doc,
     "핵심 기술로 자리매김하고 있다. 사물인터넷(IoT)과의 융합이 가속화되면서 RFID의 활용 범위는 더욱 확대될 것으로 전망된다.",
     indent=True)
 
+# ── 참고 문헌 ─────────────────────────────────────────
+from docx.oxml.ns import qn as _qn
+from docx.oxml import OxmlElement as _OxmlElement
+
+# 페이지 나누기
+page_break_p = doc.add_paragraph()
+page_break_p.paragraph_format.space_before = Pt(0)
+page_break_p.paragraph_format.space_after  = Pt(0)
+run_br = page_break_p.add_run()
+br = _OxmlElement('w:br')
+br.set(_qn('w:type'), 'page')
+run_br._r.append(br)
+
+ref_title = doc.add_paragraph()
+ref_title.alignment = WD_ALIGN_PARAGRAPH.LEFT
+ref_title.paragraph_format.space_before = Pt(0)
+ref_title.paragraph_format.space_after  = Pt(8)
+rt_run = ref_title.add_run("참고 문헌")
+rt_run.font.size = Pt(14)
+rt_run.font.bold = True
+rt_run.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
+
+refs = [
+    "Finkenzeller, K. (2010). RFID Handbook: Fundamentals and Applications in Contactless Smart Cards, Radio Frequency Identification and Near-Field Communication (3rd ed.). Wiley.",
+    "Want, R. (2006). An introduction to RFID technology. IEEE Pervasive Computing, 5(1), 25-33. https://doi.org/10.1109/MPRV.2006.11",
+    "Bhatt, H., & Bhatt, G. (2005). RFID technology and its applications in information systems and supply chain management. Information Systems Management, 22(4), 51-65.",
+    "ISO/IEC 18000-6:2013. Information technology — Radio frequency identification for item management — Part 6: Parameters for air interface communications at 860 MHz to 960 MHz General. ISO.",
+    "EPCglobal. (2008). EPC Radio-Frequency Identity Protocols Class-1 Generation-2 UHF RFID Protocol for Communications at 860 MHz–960 MHz (Version 1.2.0). GS1.",
+    "한국도로공사. (2024). 하이패스 시스템 소개. https://www.ex.co.kr",
+    "식품의약품안전처. (2022). 의료기기 고유식별코드(UDI) 제도 안내. 식품의약품안전처.",
+    "한국정보통신기술협회(TTA). (2021). RFID 기술 동향 및 표준화 현황. TTA Journal, 196, 42-48.",
+]
+
+for i, ref in enumerate(refs, 1):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = Pt(1)
+    p.paragraph_format.space_after  = Pt(4)
+    p.paragraph_format.left_indent  = Pt(24)
+    p.paragraph_format.first_line_indent = Pt(-24)
+    run = p.add_run(f"[{i}] {ref}")
+    run.font.size = Pt(10)
+
 doc.save("/workspace/RFID_개념과_활용분야.docx")
 print("문서 생성 완료: RFID_개념과_활용분야.docx")

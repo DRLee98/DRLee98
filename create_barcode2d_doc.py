@@ -107,5 +107,47 @@ add_body(doc,
     "데이터 매트릭스는 초소형 부품·의약품 추적에 각각 최적화된 형태로 발전해 왔으며, "
     "디지털 전환(DX) 흐름 속에서 그 활용 범위는 더욱 확대될 것으로 예상된다.")
 
+# ── 참고 문헌 ─────────────────────────────────────────
+from docx.oxml.ns import qn as _qn
+from docx.oxml import OxmlElement as _OxmlElement
+
+page_break_p = doc.add_paragraph()
+page_break_p.paragraph_format.space_before = Pt(0)
+page_break_p.paragraph_format.space_after  = Pt(0)
+run_br = page_break_p.add_run()
+br = _OxmlElement('w:br')
+br.set(_qn('w:type'), 'page')
+run_br._r.append(br)
+
+ref_title = doc.add_paragraph()
+ref_title.alignment = WD_ALIGN_PARAGRAPH.LEFT
+ref_title.paragraph_format.space_before = Pt(0)
+ref_title.paragraph_format.space_after  = Pt(8)
+rt_run = ref_title.add_run("참고 문헌")
+rt_run.font.size = Pt(14)
+rt_run.font.bold = True
+rt_run.font.color.rgb = RGBColor(0x1F, 0x49, 0x7D)
+
+refs = [
+    "Denso Wave Incorporated. (2015). QR Code Standardization. https://www.qrcode.com/en/about/standards.html",
+    "ISO/IEC 18004:2015. Information technology — Automatic identification and data capture techniques — QR Code bar code symbology specification. ISO.",
+    "Wang, Y. J., & Liu, W. (2011). Comparison of QR code and data matrix for mobile phone barcode systems. 2011 International Conference on Computer and Management (CAMAN), 1-5. https://doi.org/10.1109/CAMAN.2011.5778834",
+    "Symbol Technologies. (1992). PDF417: A New Bar Code Symbology for Industry. Symbology Specification.",
+    "ISO/IEC 15438:2015. Information technology — Automatic identification and data capture techniques — PDF417 bar code symbology specification. ISO.",
+    "ISO/IEC 16022:2006. Information technology — Automatic identification and data capture techniques — Data Matrix bar code symbology specification. ISO.",
+    "GS1. (2023). GS1 DataMatrix Guideline: Overview and technical introduction to the use of GS1 DataMatrix. GS1 Global Office.",
+    "U.S. Food and Drug Administration. (2023). Unique Device Identification System (UDI System). https://www.fda.gov/medical-devices/device-advice-comprehensive-regulatory-assistance/unique-device-identification-system-udi-system",
+    "한국정보통신기술협회(TTA). (2020). 2차원 바코드 기술 및 응용 표준화 동향. TTA Journal, 189, 55-62.",
+]
+
+for i, ref in enumerate(refs, 1):
+    p = doc.add_paragraph()
+    p.paragraph_format.space_before = Pt(1)
+    p.paragraph_format.space_after  = Pt(4)
+    p.paragraph_format.left_indent  = Pt(24)
+    p.paragraph_format.first_line_indent = Pt(-24)
+    run = p.add_run(f"[{i}] {ref}")
+    run.font.size = Pt(10)
+
 doc.save("/workspace/2차원바코드_개념과_유형.docx")
 print("문서 생성 완료: 2차원바코드_개념과_유형.docx")
